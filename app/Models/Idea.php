@@ -9,8 +9,18 @@ class Idea extends Model
 {
     use HasFactory;
 
+    // protected $guarded = [];
+
     protected $fillable = [
         'content',
-        'likes'
+        'like'
     ];
+
+    public function comments(){
+        return $this->hasMany(Comment::class);
+    }
+
 }
+
+//$guarded cannot be mass assigned
+//$fillable can be mass assign
