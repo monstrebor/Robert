@@ -12,10 +12,10 @@
                 <form action="{{ route('ideas.destroy',$idea->id) }}" method="POST">
                     @csrf
                     @method('delete')
-                    @if(auth)
+                    @if(auth()->id() == $idea->user_id)
                     <a class="mx-2" href="{{ route('ideas.edit', $idea->id) }}">Edit</a>
                     <a class="mx-2" href="{{ route('ideas.show', $idea->id) }}">View</a>
-
+                    @endif
                     <button class="btn btn-danger bth-sm">Remove</button>
                 </form>
             </div>
