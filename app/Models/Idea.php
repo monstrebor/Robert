@@ -12,6 +12,7 @@ class Idea extends Model
     // protected $guarded = [];
 
     protected $fillable = [
+        'user_id',
         'content',
         'like'
     ];
@@ -20,6 +21,9 @@ class Idea extends Model
         return $this->hasMany(Comment::class);
     }
 
+    public function user(){
+        return $this->belongsTo(User::class);
+}
 }
 
 //$guarded cannot be mass assigned

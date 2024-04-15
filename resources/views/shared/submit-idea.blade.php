@@ -1,4 +1,5 @@
-<h4> Hey {{ config('app.name') }} Share your ideas</h4>
+@auth
+<h4> Hey {{ Auth::user()->name }} share your ideas</h4>
 <div class="row">
     <form action="{{ route('ideas.store') }}" method="POST"> {{-- Use the name you give in the web route--}}
         @csrf {{--  to prevent csrf attacks --}}
@@ -13,4 +14,8 @@
         </div>
     </form>
 </div>
+@endauth
+@guest
+    <h1 class="text-center">Login to share your ideas</h1>
+@endguest
 
