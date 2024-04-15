@@ -40,10 +40,15 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'password' => 'hashed',
     ];
 
-    public function idea(){
-        return $this->hasMany(Idea::class);
+    public function ideas(){
+        return $this->hasMany(Idea::class)->latest();
+    }
+
+    public function comments(){
+        return $this->hasMany(Comment::class)->latest();
     }
 
 }
