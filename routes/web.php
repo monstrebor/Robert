@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\IdeaController;
 use App\Http\Controllers\CommentController;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,36 +18,53 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get("/", [DashboardController::class,'dashboard'])->name('dashboard');
+Route::get("/", [DashboardController::class, 'dashboard'])->name('dashboard');
 
-Route::post('/ideas', [IdeaController::class,'store'])->name('ideas.store');
 
-Route::get('/ideas/{idea}', [IdeaController::class,'show'])->name('ideas.show');
+Route::resource('ideas',IdeaController::class)->except(['index','create'])->middleware('auth');
 
-Route::get('/ideas/{idea}/edit', [IdeaController::class,'edit'])->name('ideas.edit')->middleware('auth');
+Route::resource('ideas',IdeaController::class)->only(['show']);
 
-Route::put('/ideas/{idea}', [IdeaController::class,'update'])->name('ideas.update')->middleware('auth');
+Route::resource('ideas.comments',CommentController::class)->only(['store'])->middleware('auth');
 
-Route::delete('/ideas/{idea}', [IdeaController::class,'destroy'])->name('ideas.destroy')->middleware('auth');
 
-Route::post('/ideas{idea}/comments', [CommentController::class,'store'])->name('ideas.comments.store')->middleware('auth');
-
-Route::get('/register', [AuthController::class,'register'])->name('register');
-
-Route::post('/register', [AuthController::class,'store']);
-
-Route::get('/login', [AuthController::class,'login'])->name('login');
-
-Route::post('/login', [AuthController::class,'authenticate']);
-
-Route::post('/logout', [AuthController::class,'logout'])->name('logout');
-
-Route::get('/terms', function(){
+Route::get('/terms', function () {
     return view('terms');
 });
+
+
+
+
+
+
+
+
+
+
 
 // for making a comment function
 // model
 // controller
 // migration
 //setup the routes
+
+// this route manually created without route::group and route::resource
+
+// Route::get('/{idea}', [IdeaController::class, 'show'])->name('show');
+
+// Route::post('', [IdeaController::class, 'store'])->name('store');
+
+// Route::get('/{idea}/edit', [IdeaController::class, 'edit'])->name('edit');
+
+// Route::put('/{idea}', [IdeaController::class, 'update'])->name('update');
+
+// Route::delete('/{idea}', [IdeaController::class, 'destroy'])->name('destroy');
+
+
+// Route::group([ 'prefix' => 'ideas/','as'=>'ideas.'], function () {
+
+//     Route::group(['middleware' => ['auth']], function (){
+
+//     Route::post('/{idea}/comments', [CommentController::class, 'store'])->name('comments.store');
+//     });
+// });
