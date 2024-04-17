@@ -26,5 +26,4 @@
         </div>
     </div>
     @endforeach
-    <a href="{{ route('dashboard') }}" class="btn btn-danger bth-sm">Back</a>
 </div>
