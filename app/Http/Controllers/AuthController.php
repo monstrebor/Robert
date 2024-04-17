@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\WelcomeEmail;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
@@ -14,16 +17,19 @@ class AuthController extends Controller
 
     public function store(){
         $validated = request()->validate([
-            "name"=> "required|min:3|max:40",
-            "email"=> "required|email|unique:users,email",
-            "password"=> "required|confirmed|min:8|max:20"
+            'name'=> 'required|min:3|max:40',
+            'email'=> 'required|email|unique:users,email',
+            'password'=> 'required|confirmed'
         ]);
 
-        User::create([
+        $user = User::create([
             "name"=> $validated["name"],
             "email"=> $validated["email"],
             "password" => Hash::make($validated["password"]),
         ]);
+
+        Mail::to($user->email)->send(new WelcomeEmail($user));
+
         return redirect()->route("dashboard")->with("success","Your Account has been created!!");
     }
 
