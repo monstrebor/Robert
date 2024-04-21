@@ -1,5 +1,5 @@
 <div>
-    <form action="{{ route('ideas.comments.store',$idea->id) }}" method="POST" onsubmit="return validateForm()">
+    <form action="{{ route('ideas.comments.store',$idea->id) }}" method="POST">
         @csrf
         <div class="mb-3">
             <textarea name="content" class="fs-6 form-control" rows="1" id="content"></textarea>
@@ -29,14 +29,3 @@
                     <p class="text-center my-4">No comments found...</p>
     @endforelse
 </div>
-
-<script>
-    function validateForm() {
-        var content = document.getElementById("content").value;
-        if (content.trim() == "") {
-            alert("Please put words to submit a comment.");
-            return false;
-        }
-        return true;
-    }
-</script>
