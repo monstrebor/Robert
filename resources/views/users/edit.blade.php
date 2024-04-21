@@ -11,7 +11,7 @@
                 @include('users.shared.user-edit-card')
                 <div class="mt-3">
 
-                @include('shared.user-card')
+                @include('users.shared.user-card')
                 </div>
                 <hr>
 

@@ -1,8 +1,8 @@
 <div>
-    <form action="{{ route('ideas.comments.store',$idea->id) }}" method="POST">
+    <form action="{{ route('ideas.comments.store',$idea->id) }}" method="POST" onsubmit="return validateForm()">
         @csrf
         <div class="mb-3">
-            <textarea name="content" class="fs-6 form-control" rows="1"></textarea>
+            <textarea name="content" class="fs-6 form-control" rows="1" id="content"></textarea>
         </div>
         <div>
             <button type="submit" class="btn btn-primary btn-sm"> Post Comment </button>
@@ -18,7 +18,7 @@
         <div class="w-100">
         <div class="d-flex justify-content-between">
             <h6 class="">{{ $comment->user->name }}</h6>
-            <small class="fs-6 fw-light text-muted"> {{ $comment->created_at }}</small>
+            <small class="fs-6 fw-light text-muted"> {{ $comment->created_at->diffForHumans() }}</small>
         </div>
             <p class="fs-6 mt-3 fw-light">
                 {{ $comment->content }}
@@ -29,3 +29,14 @@
                     <p class="text-center my-4">No comments found...</p>
     @endforelse
 </div>
+
+<script>
+    function validateForm() {
+        var content = document.getElementById("content").value;
+        if (content.trim() == "") {
+            alert("Please put words to submit a comment.");
+            return false;
+        }
+        return true;
+    }
+</script>

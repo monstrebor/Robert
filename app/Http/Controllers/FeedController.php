@@ -2,15 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\WelcomeEmail;
 use App\Models\Idea;
 use Illuminate\Http\Request;
 
-class DashboardController extends Controller
+class FeedController extends Controller
 {
-    public function index(){
+    /**
+     * Handle the incoming request.
+     */
+    public function __invoke(Request $request) //you only see the post of the id you have follow
+    {
+        $followingIds = auth()->user()->followings()->pluck('user_id');
 
-        $ideas = Idea::orderBy('created_at','desc');
+        $ideas = Idea::whereIn('user_id',$followingIds)->latest();
 
         if(request()->has("search")){
             $ideas = $ideas->where('content','like', '%' . request()->get('search','') .'%');
@@ -21,6 +25,3 @@ class DashboardController extends Controller
         ]);
     }
 }
-
-
-        // dump(Idea::all());
