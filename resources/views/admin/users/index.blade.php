@@ -1,5 +1,5 @@
 @extends('layout.layout')
-
+@section('title','Users | Admin Dashboard')
 @section('content')
     <div class="container py-4">
         <div class="row">
