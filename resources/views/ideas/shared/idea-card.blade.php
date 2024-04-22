@@ -8,16 +8,18 @@
                     <h5 class="card-title mb-0"><a href="{{ route('users.show',$idea->user->id) }}">{{ $idea->user->name }}</a></h5>
                 </div>
             </div>
-            <div>
+            <div class="d-flex">
+                <a class="mx-2" href="{{ route('ideas.show', $idea->id) }}">View</a>
+                @auth
+                @can('update', $idea)
+                <a class="mx-2" href="{{ route('ideas.edit', $idea->id) }}">Edit</a>
                 <form action="{{ route('ideas.destroy',$idea->id) }}" method="POST">
-                    @csrf
-                    @method('delete')
-                    @if(auth()->id() == $idea->user_id) {{--Make the guest to register or login enable to be access--}}
-                    <a class="mx-2" href="{{ route('ideas.edit', $idea->id) }}">Edit</a>
-                    <button class="btn btn-danger bth-sm">Remove</button>
-                    @endif
-                    <a class="mx-2" href="{{ route('ideas.show', $idea->id) }}">View</a>
+                @csrf
+                @method('delete')
+                <button class="btn btn-danger bth-sm">Remove</button>
                 </form>
+                @endcan
+                @endauth
             </div>
         </div>
     </div>
