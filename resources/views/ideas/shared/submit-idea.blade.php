@@ -16,6 +16,6 @@
 </div>
 @endauth
 @guest
-    <h1 class="text-center">Login to share your ideas</h1>
+    <h1 class="text-center">LOG IN TO SHARE YOUR IDEAS</h1>
 @endguest
 
